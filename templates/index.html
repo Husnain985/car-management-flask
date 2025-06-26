@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Management</title>
+</head>
+<body>
+  <h1>Car Management</h1>
+
+  <h2>Add Car</h2>
+  <form method="POST" action="/car">
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="text" name="model" placeholder="Model" required>
+    <input type="text" name="brand" placeholder="Brand" required>
+    <input type="text" name="color" placeholder="Color">
+    <input type="number" name="price" placeholder="Price">
+    <button type="submit">Add Car</button>
+  </form>
+
+  <h2>All Cars</h2>
+  <table border="1">
+    <tr>
+      <th>ID</th><th>Name</th><th>Model</th><th>Brand</th><th>Color</th><th>Price</th><th>Action</th>
+    </tr>
+    {% for car in cars %}
+    <tr>
+      <form action="/update/{{ car['id'] }}" method="POST">
+        <td>{{ car['id'] }}</td>
+        <td><input name="name" value="{{ car['name'] }}"></td>
+        <td><input name="model" value="{{ car['model'] }}"></td>
+        <td><input name="brand" value="{{ car['brand'] }}"></td>
+        <td><input name="color" value="{{ car['color'] }}"></td>
+        <td><input name="price" value="{{ car['price'] }}"></td>
+        <td>
+          <button type="submit">Update</button>
+          <a href="/delete/{{ car['id'] }}">Delete</a>
+        </td>
+      </form>
+    </tr>
+    {% else %}
+    <tr><td colspan="7">No cars found</td></tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
